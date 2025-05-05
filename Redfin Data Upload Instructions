@@ -1,0 +1,85 @@
+# 📥 Redfin Data Upload Instructions
+
+This guide explains how we downloaded, converted, and uploaded the Redfin housing market dataset to HDFS for use in Hive.
+
+---
+
+## Step 1: Download Dataset
+- Source: [Kaggle - Redfin Housing Market Data](https://www.kaggle.com/datasets/thuynyle/redfin-housing-market-data)
+- After download, locate the zip file on your machine (we renamed ours to `Redfin.zip`)
+
+---
+
+## Step 2: Unzip in Git Bash
+```bash
+unzip Redfin.zip -d redfin_data
+```
+- You should see 5 `.tsv000` files extracted
+
+---
+
+## Step 3: Navigate into Directory
+```bash
+cd redfin_data
+```
+
+---
+
+## Step 4: Convert .TSV to .CSV
+```bash
+for file in *.tsv000; do
+  cat "$file" | tr '\t' ',' > "${file%.tsv000}.csv"
+done
+```
+
+---
+
+## Step 5: Verify Converted Files
+```bash
+ls *.csv
+```
+Expected output:
+- `county_market_tracker.csv`
+- `neighborhood_market_tracker.csv`
+- `state_market_tracker.csv`
+- `us_national_market_tracker.csv`
+- `zip_code_market_tracker.csv`
+
+---
+
+## Step 6: Transfer Files to Remote Server
+```bash
+scp *.csv sruiz85@144.24.13.0:~
+```
+Repeat for any failed transfers individually.
+
+---
+
+## Step 7: Verify Upload via SSH
+```bash
+ssh sruiz85@144.24.13.0
+ls ~/*.csv
+```
+You should see all five `.csv` files in your home directory.
+
+---
+
+## Step 8: Create HDFS Target Directory
+```bash
+hdfs dfs -mkdir -p /user/sruiz85/Group5-Project
+```
+
+---
+
+## Step 9: Move Files to HDFS
+```bash
+hdfs dfs -put ~/county_market_tracker.csv /user/sruiz85/Group5-Project/
+hdfs dfs -put ~/neighborhood_market_tracker.csv /user/sruiz85/Group5-Project/
+hdfs dfs -put ~/state_market_tracker.csv /user/sruiz85/Group5-Project/
+hdfs dfs -put ~/us_national_market_tracker.csv /user/sruiz85/Group5-Project/
+hdfs dfs -put ~/zip_code_market_tracker.csv /user/sruiz85/Group5-Project/
+```
+
+---
+
+Once complete, your Redfin CSV files will be ready for Hive processing!
