@@ -1,3 +1,7 @@
+CREATE TABLE my_state_data AS
+SELECT *
+FROM Group5-Folder
+WHERE region_type = 'state';
 
 -- 1. Create Hive external table
 CREATE EXTERNAL TABLE sruiz85_redfin_state (
@@ -94,9 +98,9 @@ SELECT
   MAX(CASE WHEN YEAR(TO_DATE(period_begin)) = 2012 THEN median_list_price END) AS start_price,
   MAX(CASE WHEN YEAR(TO_DATE(period_begin)) = 2021 THEN median_list_price END) AS end_price,
   ROUND(100 * (
-    MAX(CASE WHEN YEAR(TO_DATE(period_begin)) = 2021 THEN median_list_price END) -
+    MAX(CASE WHEN YEAR(TO_DATE(period_begin)) = 2021 THEN median_list_price END) - 
     MAX(CASE WHEN YEAR(TO_DATE(period_begin)) = 2012 THEN median_list_price END)
-  ) /
+  ) / 
     MAX(CASE WHEN YEAR(TO_DATE(period_begin)) = 2012 THEN median_list_price END), 2) AS percent_growth
 FROM sruiz85_redfin_state
 WHERE median_list_price IS NOT NULL
