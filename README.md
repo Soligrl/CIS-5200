@@ -51,8 +51,8 @@ This project analyzes housing market trends across U.S. states using Hive for da
 ---
 
 ## 👩‍💻 Contributors
-- **Solange Ruiz** (sruiz85) – Data processing, Tableau visualizations, documentation
-- **Christian Ahamba** – Hive scripting and data modeling
+- **Solange Ruiz** (sruiz85) – Data processing, Hive scripting, data modeling, Tableau visualizations, and documentation
+- **Christian Ahamba** – Key Findings, Implementation Workflow
 
 Project completed as part of **CIS 5200** at **Cal State LA**, supervised by **Prof. Jongwook Woo**.
 
